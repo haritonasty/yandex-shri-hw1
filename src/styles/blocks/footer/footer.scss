@@ -1,0 +1,83 @@
+@import '../../shared/variables';
+@import '../../shared/mixin';
+
+.footer {
+  box-sizing: border-box;
+  padding: 1vw 6vw;
+  @include respond-to(small-portrait) {
+    font-size: 2.7vw;
+    height: 12vw;
+    padding: 2vw;
+  }
+
+  @include respond-to(small-landscape) {
+    font-size: 1.5vw;
+    height: 8vw;
+  }
+
+  @include respond-to(big-portrait) {
+    font-size: 2.3vw;
+    height: 10vw;
+  }
+
+  @include respond-to(big-landscape) {
+    font-size: .75vw;
+  }
+
+}
+
+.footer__inner {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  @include respond-to(small-portrait) {
+    flex-direction: column;
+  }
+
+  @include respond-to(big-portrait) {
+    flex-direction: column;
+  }
+
+}
+
+.footer__nav-items {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.footer__nav-item {
+  list-style: none;
+  @include respond-to(small-portrait) {
+    margin-right: 2.3vw;
+  }
+
+  @include respond-to(small-landscape) {
+    margin-right: 2vw;
+  }
+
+  @include respond-to(big-portrait) {
+    margin-right: 3vw;
+  }
+
+  @include respond-to(big-landscape) {
+    margin-right: 1.3vw;
+  }
+}
+
+.footer__nav-item_last {
+  margin-right: 0;
+}
+
+.footer__nav-link {
+  color: $additional-color;
+  text-decoration: none;
+}
+
+
+
+

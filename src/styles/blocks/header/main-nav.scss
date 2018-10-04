@@ -1,0 +1,99 @@
+@import '../../shared/variables';
+@import '../../shared/mixin';
+
+.main-nav {
+  @include respond-to(small-portrait) {
+    background-color: $modal-background;
+    transition: background-color .5s;
+  }
+}
+
+.main-nav__hidden {
+  @include respond-to(small-portrait) {
+    background-color: $modal-background-hidden;
+    pointer-events: none;
+    transition: background-color .5s;
+  }
+}
+
+.page__main-nav {
+  @include respond-to(small-portrait) {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+}
+
+.main-nav__inner {
+  @include respond-to(small-portrait) {
+    backface-visibility: hidden;
+    background-color: $base-background;
+    box-shadow: 1px 1px 8px $additional-color;
+    box-sizing: border-box;
+    height: 100%;
+    max-width: 270px;
+    position: absolute;
+    right: 0;
+    transition: transform .3s;
+    width: 80%;
+    will-change: transform;
+  }
+
+}
+
+.main-nav__inner_hidden {
+  @include respond-to(small-portrait) {
+    transform: translateX(103%);
+  }
+}
+
+.main-nav__items {
+  display: flex;
+  padding: 0;
+
+  @include respond-to(small-portrait) {
+    flex-direction: column;
+    margin: 11vw 0;
+  }
+}
+
+.main-nav__item {
+  list-style: none;
+
+  @include respond-to(small-portrait) {
+    font-size: 4.5vw;
+    padding: 4vw 0 4vw 9vw;
+  }
+
+  @include respond-to(small-landscape) {
+    font-size: 2.5vw;
+    margin-right: 3vw;
+  }
+
+  @include respond-to(big-portrait) {
+    font-size: 3vw;
+    margin-right: 3vw;
+  }
+
+  @include respond-to(big-landscape) {
+    font-size: 1.1vw;
+    margin-right: 1.9vw;
+  }
+}
+
+.main-nav__item_last {
+  margin-right: 0;
+}
+
+.main-nav__item_active .main-nav__item-link {
+  opacity: 1;
+}
+
+.main-nav__item-link {
+  color: $primary-color;
+  opacity: .6;
+  text-decoration: none;
+}

@@ -1,0 +1,35 @@
+{
+  "name": "yandex-shri-hw1",
+  "version": "1.0.0",
+  "description": "Адаптивная верстка страницы сценариев УмногоДома 🤖",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development ./node_modules/.bin/gulp dev",
+    "prod": "NODE_ENV=production ./node_modules/.bin/gulp dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haritonasty/yandex-shri-hw1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haritonasty/yandex-shri-hw1/issues"
+  },
+  "homepage": "https://github.com/haritonasty/yandex-shri-hw1#readme",
+  "devDependencies": {
+    "browser-sync": "^2.24.6",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-rigger": "^0.5.8",
+    "gulp-sass": "^4.0.1",
+    "gulp-scss-lint": "^0.6.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglifyes": "^0.1.3"
+  }
+}

@@ -1,0 +1,52 @@
+@import '../../shared/mixin';
+@import '../../shared/variables';
+
+.button-burger {
+  border: 0;
+  width: 4.5vw;
+
+  &::before,
+  &::after {
+    content: '';
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::before {
+    top: -1.7vw;
+  }
+
+  &::after {
+    bottom: -1.7vw;
+  }
+}
+
+.button-burger,
+.button-burger::before,
+.button-burger::after {
+  background-color: $base-color;
+  border-radius: 5px;
+  height: .75vw;
+}
+
+.header__button-burger {
+  margin: 3vw 0;
+
+  @include respond-to(small-portrait) {
+    position: relative;
+  }
+
+  @include respond-to(small-landscape) {
+    display: none;
+  }
+
+  @include respond-to(big-portrait) {
+    display: none;
+  }
+
+  @include respond-to(big-landscape) {
+    display: none;
+  }
+}
+

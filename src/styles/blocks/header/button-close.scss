@@ -1,0 +1,50 @@
+@import '../../shared/variables';
+@import '../../shared/mixin';
+
+.button-close {
+  border: 0;
+  height: 5vw;
+  padding: 5vw;
+  width: 5vw;
+
+  &::before,
+  &::after {
+    background-color: $primary-color;
+    border-radius: 5px;
+    content: '';
+    height: .6vw;
+    left: 20%;
+    position: absolute;
+    top: 50%;
+    width: 6vw;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.main-nav__button-close {
+  @include respond-to(small-portrait) {
+    background-color: inherit;
+    position: absolute;
+    right: 4vw;
+    top: 4vw;
+  }
+  @include respond-to(small-landscape) {
+    display: none;
+  }
+
+  @include respond-to(big-portrait) {
+    display: none;
+  }
+
+  @include respond-to(big-landscape) {
+    display: none;
+  }
+}
+

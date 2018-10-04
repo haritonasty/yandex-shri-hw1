@@ -1,0 +1,39 @@
+@import '../../shared/mixin';
+
+.logo {
+  @include respond-to(small-portrait) {
+    width: 29vw;
+  }
+
+  @include respond-to(small-landscape) {
+    width: 17vw;
+  }
+
+  @include respond-to(big-portrait) {
+    width: 20vw;
+  }
+
+  @include respond-to(big-landscape) {
+    width: 7.8vw;
+  }
+}
+
+.header__logo {
+  position: relative;
+  @include respond-to(small-landscape) {
+    margin-right: 5vw;
+  }
+
+  @include respond-to(big-portrait) {
+    margin-right: 5vw;
+  }
+
+  @include respond-to(big-landscape) {
+    margin-right: 3.1vw;
+  }
+}
+
+.logo__img {
+  width: 100%;
+}
+
