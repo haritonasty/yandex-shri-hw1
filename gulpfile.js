@@ -22,27 +22,27 @@ gulp.task('styles', function () {
         .pipe(concat('style.css'))
         .pipe(cleanCss())
         .pipe(gulpIf(isDevelopment, sourcemaps.write()))
-        .pipe(gulp.dest('public'));
+        .pipe(gulp.dest('docs'));
 });
 
 gulp.task('clean', function () { return del('public'); });
 
 gulp.task('assets', function () {
     return gulp.src('src/assets/**', { since: gulp.lastRun('assets') })
-        .pipe(gulp.dest('public'));
+        .pipe(gulp.dest('docs'));
 });
 
 gulp.task('scripts', function () {
     return gulp.src('src/scripts/**/*.js')
         .pipe(uglifyes({ compress:true, mangle: true, ecma: 6 }))
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('public'));
+        .pipe(gulp.dest('docs'));
 });
 
 gulp.task('html', function () {
     return gulp.src('src/*.html')
         .pipe(rigger())
-        .pipe(gulp.dest('public'))
+        .pipe(gulp.dest('docs'))
 });
 
 gulp.task('build', gulp.series('clean',gulp.parallel('styles', 'assets', 'scripts', 'html')));
@@ -55,8 +55,8 @@ gulp.task('watch', function () {
 });
 
 gulp.task('serve', function () {
-    browserSync.init({ server: 'public' });
-    browserSync.watch('public/**/*.*').on('change', browserSync.reload);
+    browserSync.init({ server: 'docs' });
+    browserSync.watch('docs/**/*.*').on('change', browserSync.reload);
 });
 
 gulp.task('dev', gulp.series('build', gulp.parallel('watch', 'serve')));
