@@ -50,9 +50,10 @@
   $map: (320px: 14px, 400px: 14px, 992px: 24px);
   @include poly-fluid-sizing('font-size', $map);
   overflow: hidden;
-  $map: (320px: 35px, 400px: 35px, 992px: 55px);
-  @include poly-fluid-sizing('max-height', $map);
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .event__main-info {
