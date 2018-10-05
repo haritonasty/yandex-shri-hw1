@@ -12,7 +12,6 @@
   box-sizing: border-box;
   justify-content: flex-start;
   font-family: Arial;
-  font-size: 18px;
   font-weight: 400;
   color: $base-color;
   border: 1px solid $base-color;
@@ -46,54 +45,79 @@
 
 
 .event__title {
+  width: 72%;
   font-weight: bold;
-  font-size: 24px;
+  $map: (320px: 14px, 400px: 14px, 992px: 24px);
+  @include poly-fluid-sizing('font-size', $map);
+  overflow: hidden;
+  $map: (320px: 35px, 400px: 35px, 992px: 55px);
+  @include poly-fluid-sizing('max-height', $map);
+  text-overflow: ellipsis;
 }
 
 .event__main-info {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 20px 20px 0 20px;
+  justify-content: flex-start;
+
+  $map: (320px: 16px, 400px: 16px, 600px:17px, 992px: 20px);
+  @include poly-fluid-sizing('margin-right', $map);
+  @include poly-fluid-sizing('margin-left', $map);
+  @include poly-fluid-sizing('margin-top', $map);
+  margin-bottom: 0;
 }
 
 .event__icon {
-  width: 53px;
-  height: 60px;
-  margin-right: 19.4px;
+  $map: (320px: 35px, 400px: 35px, 992px: 55px);
+  @include poly-fluid-sizing('width', $map);
+  @include poly-fluid-sizing('height', $map);
+
+  $map: (320px: 16px, 400px: 16px, 992px: 19.4px);
+  @include poly-fluid-sizing('margin-right', $map);
 }
 
 .event__info {
-  margin: 0 20px 20px 20px;
   display: flex;
   flex-wrap: wrap;
-  font-size: 18px;
   font-weight: 300;
   justify-content: space-between;
+  $map: (320px: 12px, 400px: 12px, 992px: 18px);
+  @include poly-fluid-sizing('font-size', $map);
+
+  $map: (320px: 16px, 400px: 16px, 992px: 20px);
+  @include poly-fluid-sizing('margin-right', $map);
+  @include poly-fluid-sizing('margin-left', $map);
+  @include poly-fluid-sizing('margin-bottom', $map);
+  margin-top: 0;
 }
 
 .event__source {
   width: 100%;
-  margin-top: 20px;
+
+  $map: (320px: 16px, 400px: 16px, 992px: 20px);
+  @include poly-fluid-sizing('margin-top', $map);
+}
+
+.event__time {
+  $map: (320px: 16px, 400px: 16px, 992px: 20px);
+  @include poly-fluid-sizing('margin-top', $map);
 }
 
 .event__source_small {
   width: fit-content;
 }
 
-.event__time {
-  margin-top: 20px;
-}
-
 .event__description {
-  //font-size: 20px;
   font-weight: 400;
   word-wrap: break-word;
-  width: 87%;
   color: $primary-color;
   $map: (320px: 18px, 400px: 18px, 992px: 20px);
   @include poly-fluid-sizing('font-size', $map);
 
+  @media screen and (min-width: 900px) {
+    width: 87%;
+  }
 }
 
 .event__description_big{
@@ -104,6 +128,8 @@
 .event__data {
   margin-top: 18px;
   color: $primary-color;
+  $map: (320px: 14px, 400px: 14px, 992px: 18px);
+  @include poly-fluid-sizing('font-size', $map);
 }
 
 .climate__value {
@@ -125,10 +151,12 @@
   background-color: $elem-background;
   padding: 15px 20px;
   min-width: 132px;
-  margin-right: 18px;
   border-radius: 8px;
   font-size: 20px;
   box-sizing: border-box;
+
+
+  margin-right: 18px;
 }
 
 .data__button:first-child {
@@ -145,10 +173,13 @@
   border-radius: 18px;
   background-color: $block-background;
   display: flex;
-  padding: 20px;
   flex-direction: column;
   box-sizing: border-box;
   margin-top: auto;
+
+  $map: (320px: 16px, 400px: 16px, 992px: 20px);
+  @include poly-fluid-sizing('padding', $map);
+
 }
 
 .data__music{
