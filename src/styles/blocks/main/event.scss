@@ -86,15 +86,19 @@
 }
 
 .event__description {
-  font-size: 20px;
+  //font-size: 20px;
   font-weight: 400;
   word-wrap: break-word;
   width: 87%;
   color: $primary-color;
+  $map: (320px: 18px, 400px: 18px, 992px: 20px);
+  @include poly-fluid-sizing('font-size', $map);
+
 }
 
 .event__description_big{
-  font-size: 24px;
+  $map: (320px: 18px, 400px: 18px, 992px: 24px);
+  @include poly-fluid-sizing('font-size', $map);
 }
 
 .event__data {
@@ -176,3 +180,4 @@
   background-color: $critical-background;
   color: $invert-color;
 }
+

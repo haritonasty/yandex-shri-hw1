@@ -12,4 +12,17 @@
   max-width: 1102px;
   margin: 0 auto;
 }
+@media screen and (max-width: 800px){
+  .events{
+    display: flex;
+    flex-direction: column;
+    margin-top: 8vh;
+  }
+
+  .event{
+    margin-bottom: 20px;
+  }
+}
+
+
 
