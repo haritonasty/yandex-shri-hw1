@@ -2,118 +2,59 @@
 @import '../../shared/mixin';
 
 .main {
-  //height: 80vh;
-
   padding: 20px;
 }
 
 .events {
   display: grid;
   grid-gap: 20px;
-  //grid-template-columns: repeat(auto-fit, 167px);
-
   grid-auto-flow: dense;
-  max-width: 1102px;
+
   margin: 0 auto;
   margin-top: 10vh;
+
+  $map: (576px: 8px, 768px:8px, 1000px: 15px, 1120px: 20px);
+  @include poly-fluid-sizing('grid-gap', $map);
+
+}
+
+.event {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.event-middle {
+  grid-column: span 3;
+}
+
+.event-big {
+  grid-column: span 2;
+  grid-row: span 3;
 }
 
 @media screen and (max-width: 576px) {
   .events {
     display: flex;
     flex-direction: column;
-
-    //$map: (320px: 8vh, 400px: 10vh, 550px: 15vh, 800px: 12vh);
-    //@include poly-fluid-sizing('margin-top', $map);
   }
 
   .event {
     margin-bottom: 20px;
   }
 
-  .event__source{
+  .event__source {
     width: 60%;
   }
 }
-
-@media screen and (min-width: 576px) {
-  .event {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-
-  .event-middle {
-    grid-column: span 3;
-  }
-
-  .event-big {
-    grid-column: span 2;
-    grid-row: span 3;
-  }
-
-  .events{
-    grid-gap: 8px;
-    //grid-template-columns: repeat(auto-fit,minmax(232px,262px));
-  }
-
-
-}
-
 
 @media screen and (min-width: 768px) {
-  .event {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-
-  .event-middle {
-    grid-column: span 2;
-  }
-
-  .event-big {
-    grid-column: span 2;
-    grid-row: span 3;
-  }
-
-  .events{
-    grid-gap: 8px;
-    //grid-template-columns: repeat(auto-fit,minmax(232px,262px));
-  }
-
-  .event__source{
+  .event__source {
     width: 60%;
   }
 
-
 }
-//
-//@media screen and (min-width: 768px) {
-//  .event {
-//    grid-column: span 2;
-//    grid-row: span 1;
-//  }
-//
-//  .event-middle {
-//    grid-column: span 2;
-//  }
-//
-//  .event-big {
-//    grid-column: span 2;
-//    grid-row: span 3;
-//  }
-//
-//  .event__source{
-//    width: 60%;
-//  }
-//
-//  .events{
-//    grid-gap: 8px;
-//    grid-template-columns: repeat(auto-fit,minmax(200px,202px));
-//  }
-//
-//}
 
-@media screen and (min-width: 1020px) {
+@media screen and (min-width: 1000px) {
   .event {
     grid-column: span 2;
     grid-row: span 1;
@@ -128,14 +69,15 @@
     grid-row: span 3;
   }
 
-  .events{
-    grid-template-columns: repeat(auto-fit, 150px);
+  .events {
+    grid-template-columns: repeat(auto-fit, 140px);
+    max-width: 915px;
+    grid-gap: 15px;
   }
 
 }
 
-
-@media screen and (min-width: 1082px) {
+@media screen and (min-width: 1150px) {
   .event {
     grid-column: span 2;
     grid-row: span 1;
@@ -150,8 +92,9 @@
     grid-row: span 3;
   }
 
-  .events{
+  .events {
     grid-template-columns: repeat(auto-fit, 167px);
+    max-width: 1102px;
   }
 
 }

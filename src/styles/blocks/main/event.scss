@@ -115,7 +115,7 @@
   $map: (320px: 18px, 400px: 18px, 992px: 20px);
   @include poly-fluid-sizing('font-size', $map);
 
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 1100px) {
     width: 87%;
   }
 }
@@ -163,6 +163,10 @@
   background-color: $yellow;
 }
 
+.data__button:last-child {
+  margin-right: 0;
+}
+
 .event__icon{
   fill: $base-color;
 }
@@ -196,6 +200,7 @@
 .data__image img{
   width: 100%;
   height: auto;
+  border-radius: 0 0 15px 15px;
 }
 
 
