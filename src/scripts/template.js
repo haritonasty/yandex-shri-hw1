@@ -32,6 +32,8 @@ fetch('./events.json')
             if (events[e].description) {
                 event.querySelector('.additional-info').classList.remove('additional-info_disabled');
                 event.querySelector('.event__description').innerText = events[e].description;
+            } else {
+                event.querySelector('.event__info').classList.add('event__info_last');
             }
 
             if (events[e].icon === 'thermal') {
@@ -81,7 +83,10 @@ fetch('./events.json')
             if (events[e].icon === 'cam') {
                 event.querySelector('.event__data').innerHTML = `
                  <div class="data__image">
-                        <img src="./image.jpg" alt="График">
+                        <img srcset="cam.png,
+                                     cam2x.png 2x,
+                                     cam3x.png 3x"
+                             src="cam.png" alt="Снимок камеры с пылесосом">
                     </div>
                 `;
             }

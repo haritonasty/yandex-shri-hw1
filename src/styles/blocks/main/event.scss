@@ -144,6 +144,10 @@
   margin-top: 0;
 }
 
+.event__info_last {
+  margin-top: auto;
+}
+
 .event__source {
   width: 100%;
 
@@ -258,7 +262,7 @@
 .data__image img {
   width: 100%;
   height: auto;
-  border-radius: 0 0 15px 15px;
+  border-radius: 0 0 20px 20px;
 }
 
 .data__music_composition {
