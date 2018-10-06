@@ -9,11 +9,11 @@ fetch('./events.json')
             const event = document.getElementById('template-event').content.cloneNode(true);
             if (events[e].size === 'm') {
                 event.querySelector('.event').classList.add('event-middle');
-                event.querySelector('.event__source').classList.add('event-source_small');
+                event.querySelector('.event__source').classList.add('event__source_small');
             }
             if (events[e].size === 'l') {
                 event.querySelector('.event').classList.add('event-big');
-                event.querySelector('.event__source').classList.add('event-source_small');
+                event.querySelector('.event__source').classList.add('event__source_small');
                 event.querySelector('.event__description').classList.add('event__description_big');
             }
 
@@ -83,10 +83,13 @@ fetch('./events.json')
             if (events[e].icon === 'cam') {
                 event.querySelector('.event__data').innerHTML = `
                  <div class="data__image">
+                        <picture>
+                        <sourse media="(max-width:415px)" srcset="cam.jpg">
                         <img srcset="cam.png,
                                      cam2x.png 2x,
                                      cam3x.png 3x"
                              src="cam.png" alt="Снимок камеры с пылесосом">
+                        </picture>
                     </div>
                 `;
             }
