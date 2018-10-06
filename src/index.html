@@ -7,11 +7,31 @@
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-    //= templates/svg.html
-    <div class="page">
-        //= templates/header.html
-        //= templates/main.html
+//= templates/svg.html
+<div class="page">
+    //= templates/header.html
+    <main class="main">
+        <div class="events"></div>
+    </main>
+</div>
+
+<template id="template-event">
+    <div class="event">
+        <div class="event__main-info">
+            <svg class="event__icon"><use class="event__icon_source"/></svg>
+            <span class="event__title"></span>
+        </div>
+        <div class="event__info">
+            <span class="event__source"></span>
+            <span class="event__time"></span>
+        </div>
+        <div class="additional-info additional-info_disabled">
+            <span class="event__description"></span>
+            <div class="event__data"></div>
+        </div>
     </div>
-    <script src="./vendor.js"></script>
+</template>
+
+<script src="./vendor.js"></script>
 </body>
 </html>
