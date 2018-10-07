@@ -1,0 +1,224 @@
+
+.event__data {
+  margin-top: 18px;
+  color: $primary-color;
+  $map: (320px: 14px, 400px: 14px, 992px: 18px);
+  @include poly-fluid-sizing('font-size', $map);
+}
+
+.climate__value {
+  margin-right: 35px;
+  font-weight: bold;
+}
+
+.data__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.data__button {
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: $elem-background;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  box-sizing: border-box;
+
+  $map: (320px: 114px, 992px: 132px);
+  @include poly-fluid-sizing('min-width', $map);
+
+  margin-right: 18px;
+}
+
+.data__button:first-child {
+  background-color: $yellow;
+}
+
+.data__button:last-child {
+  margin-right: 0;
+}
+
+.data__climate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+.data__music {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.data__music_image {
+  height: 50px;
+}
+
+.data__image {
+  width: 100%;
+}
+
+.data__image img {
+  width: 100%;
+  height: auto;
+  border-radius: 0 0 20px 20px;
+}
+
+.data__music_composition {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.data__music_composition-range {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.data__music_composition-range_input {
+  -webkit-appearance: none;
+  background-color: $music-range-back;
+  height: 2px;
+
+  @media screen and (min-width: 400px) {
+    width: 75%;
+  }
+
+  &::-moz-focus-outer {
+    border: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: $music-range-slider;
+    width: 6px;
+    height: 20px;
+    border-radius: 4.5px;
+  }
+
+  &::-moz-range-thumb {
+    background-color: $music-range-slider;
+    width: 6px;
+    height: 20px;
+    border-radius: 4.5px;
+  }
+  &::-ms-thumb {
+    background-color: $music-range-slider;
+    width: 6px;
+    height: 20px;
+    border-radius: 4.5px;
+  }
+}
+
+.data__music_image {
+  margin-right: 20px;
+}
+
+.music__icon {
+  fill: $music-button-fill;
+  width: 45px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: $music-button-background;
+}
+
+.music__icon_prev {
+  margin-right: 12px;
+}
+
+.music__icon_next {
+  transform: rotate(180deg);
+  margin-right: 12px;
+}
+
+.data__music_composition-volume {
+  margin-right: 15px;
+  @media screen and (max-width: 400px) {
+    width: 35%;
+    margin-right: 5px;
+  }
+
+  -webkit-appearance: none;
+  background-color: rgba(216, 216, 216, 0.30);
+  height: 4px;
+  border-radius: 2px;
+  &::-moz-focus-outer {
+    border: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: $music-range-slider-two;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+  &::-moz-range-thumb {
+    background-color:$music-range-slider-two;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+  &::-ms-thumb {
+    background-color: $music-range-slider-two;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+}
+
+.data__music_composition-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.data__music_composition-title {
+  $map: (320px: 18px, 992px: 20px);
+  @include poly-fluid-sizing('font-size', $map);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  position: relative;
+  height: calc(.99em * 1.2 * 1);
+}
+
+
+@supports not (-webkit-line-clamp: 1) {
+  .data__music_composition-title:after {
+    content: '';
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    display: block;
+    position: absolute;
+    height: calc(1em * 1.2);
+    background: linear-gradient(to right, rgba(250, 250, 250, 0), rgba(250, 250, 250, 1) 75%);
+  }
+
+  .event {
+    &:hover {
+      & .data__music_composition-title:after {
+        background: linear-gradient(to right, rgba(243, 243, 243, 0), rgba(243, 243, 243, 1) 75%);
+      }
+    }
+  }
+}
+
