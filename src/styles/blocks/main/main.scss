@@ -6,9 +6,14 @@
   @include respond-to(small-portrait) {
     margin-top: 12vw;
   }
+
   @include respond-to(small-landscape) {
     margin-top: 10vw;
   }
+
+  $map: (320px: 19px, 1120px: 32px);
+  @include poly-fluid-sizing('padding-top', $map);
+
 
 }
 
