@@ -1,5 +1,17 @@
 const container = document.querySelector('.events');
 
+function isTouchDevice() {
+    return (
+        !!(typeof window !== 'undefined' &&
+            ('ontouchstart' in window ||
+                (window.DocumentTouch &&
+                    typeof document !== 'undefined' &&
+                    document instanceof window.DocumentTouch))) ||
+        !!(typeof navigator !== 'undefined' &&
+            (navigator.maxTouchPoints || navigator.msMaxTouchPoints))
+    );
+}
+
 fetch('./events.json')
     .then(res => res.json())
     .then(data => {
@@ -40,8 +52,8 @@ fetch('./events.json')
             if (events[e].icon === 'thermal') {
                 event.querySelector('.event__data').innerHTML = `
                  <div class="data__climate">
-                        <span class="climate__type">Температура: </span><span class="climate__value">24 С</span>
-                        <span class="climate__type">Влажность: </span><span class="climate__value">80%</span>
+                        <div><span class="climate__type">Температура: </span><span class="climate__value">24 С</span></div>
+                        <div><span class="climate__type">Влажность: </span><span class="climate__value">80%</span></div>
                     </div>
                 `;
             }
@@ -82,7 +94,8 @@ fetch('./events.json')
             }
 
             if (events[e].icon === 'cam') {
-                event.querySelector('.event__data').innerHTML = `
+                if (isTouchDevice()) {
+                    event.querySelector('.event__data').innerHTML = `
                  <div class="data__image">
                         <picture>
                         <sourse media="(max-width:415px)" srcset="cam.jpg">
@@ -92,7 +105,23 @@ fetch('./events.json')
                              src="cam.png" alt="Снимок камеры с пылесосом">
                         </picture>
                     </div>
+                    <div class="event__touch-info">
+                        <div><span class="touch-info_zoom">Приближение: </span><span class="touch-info__value zoom__value">78%</span></div>
+                        <div><span class="touch-info_brightness">Яркость: </span><span class="touch-info__value brightness__value">50%</span></div>
+                    </div>
                 `;
+                } else {
+                    event.querySelector('.event__data').innerHTML = `
+                 <div class="data__image">
+                        <picture>
+                        <sourse media="(max-width:415px)" srcset="cam.jpg">
+                        <img srcset="cam.png,
+                                     cam2x.png 2x,
+                                     cam3x.png 3x"
+                             src="cam.png" alt="Снимок камеры с пылесосом">
+                        </picture>
+                    </div>`;
+                }
             }
 
             if (events[e].icon === 'stats') {

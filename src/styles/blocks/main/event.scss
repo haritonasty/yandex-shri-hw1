@@ -262,6 +262,12 @@
   margin-right: 0;
 }
 
+.data__climate{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .event__icon {
   fill: $base-color;
 }
@@ -351,6 +357,17 @@
   position: relative;
   height: calc(.99em * 1.2 * 1);
 }
+
+
+.event__touch-info{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  $map: (320px: 12px, 992px: 16px);
+  @include poly-fluid-sizing('font-size', $map);
+}
+
 
 @supports not (-webkit-line-clamp: 1) {
   .data__music_composition-title:after {
