@@ -19,7 +19,7 @@ let template = `
             </svg>
             <span class="{{ event__title }}">{{ title }}</span>
         </div>
-        <div class="event__info">
+        <div class="{{ event__info }}">
             <span class="event__source">{{ source }}</span>
             <span class="event__time">{{ time }}</span>
         </div>
@@ -78,6 +78,9 @@ function templater(html, data) {
 
         if (x === 'description' && data[x]) {
             html = html.replace(new RegExp('additional-info_disabled', 'ig'), '');
+            html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info');
+        } else{
+            html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info event__info_last');
         }
 
         if (x === 'description' && !data['data']) {
