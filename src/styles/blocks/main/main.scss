@@ -6,10 +6,20 @@
 
   @include respond-to(small-portrait) {
     margin-top: 12vw;
+    //min-height: 80vh;
   }
 
   @include respond-to(small-landscape) {
     margin-top: 10vw;
+    //min-height: 82vw;
+  }
+
+  @include respond-to(big-portrait) {
+    //min-height: 79vh;
+  }
+
+  @include respond-to(big-landscape) {
+    //min-height: 77vh;
   }
 }
 
@@ -19,7 +29,6 @@
   font-family: Arial;
   font-weight: bold;
   margin: 0;
-
 
   $map: (320px: 19px, 1120px: 32px);
   @include poly-fluid-sizing('margin-bottom', $map);
@@ -53,7 +62,7 @@
   grid-row: span 3;
 }
 
-.main-title{
+.main-title {
   grid-column: span 3;
 }
 
@@ -94,7 +103,7 @@
     grid-row: span 3;
   }
 
-  .main-title{
+  .main-title {
     grid-column: span 6;
   }
 
@@ -121,7 +130,7 @@
     grid-row: span 3;
   }
 
-  .main-title{
+  .main-title {
     grid-column: span 6;
   }
 

@@ -42,7 +42,7 @@ fetch('./events.json')
             let event = templater(template, events[e]);
             eventsStr += event;
         }
-        container.innerHTML = eventsStr;
+        container.innerHTML += eventsStr;
     });
 
 
