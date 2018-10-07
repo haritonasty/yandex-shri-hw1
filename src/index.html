@@ -12,14 +12,28 @@
 <div class="page">
     //= templates/header.html
     <main class="main">
-        <div class="events"></div>
+        <div class="events">
+            <h1 class="main-title">Лента событий</h1>
+        </div>
     </main>
 </div>
 
 <template id="template-event">
     <div class="event">
+        <div class="event__close event-control event-control_disabled">
+            <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.061 7l4.72-4.719a.75.75 0 1 0-1.062-1.061L7 5.939l-4.719-4.72A.75.75 0 1 0 1.22 2.282l4.719 4.72-4.72 4.718a.75.75 0 1 0 1.062 1.061l4.72-4.719 4.718 4.72a.748.748 0 0 0 1.061 0 .75.75 0 0 0 0-1.062L8.061 7z"/>
+            </svg>
+        </div>
+        <div class="event__open event-control event-control_disabled">
+            <svg width="10" height="16" xmlns="http://www.w3.org/2000/svg" fill="#666" stroke="#666">
+                <path d="M8.266 8.691L2.24 14.715a.98.98 0 1 1-1.387-1.387l5.33-5.33-5.33-5.33A.981.981 0 0 1 2.24 1.28l6.025 6.024a.978.978 0 0 1 0 1.387z"/>
+            </svg>
+        </div>
         <div class="event__main-info">
-            <svg class="event__icon"><use class="event__icon_source"/></svg>
+            <svg class="event__icon">
+                <use class="event__icon_source"/>
+            </svg>
             <span class="event__title"></span>
         </div>
         <div class="event__info">

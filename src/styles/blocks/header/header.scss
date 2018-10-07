@@ -11,7 +11,7 @@
   background-color: $base-background;
 
   @include respond-to(small-portrait) {
-    height: 17vw;
+    height: 12vw;
   }
 
   @include respond-to(small-landscape) {

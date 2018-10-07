@@ -22,6 +22,7 @@ fetch('./events.json')
                 event.querySelector('.event__icon').classList.add('event__icon_critical');
                 event.querySelector('.event__title').classList.add('event__title_critical');
                 event.querySelector('.event').classList.add('event-critical');
+                event.querySelector('.event__close').classList.add('event__close_white');
             }
 
             event.querySelector('.event__title').innerText = events[e].title;
@@ -101,8 +102,6 @@ fetch('./events.json')
                     </div>
                 `;
             }
-
-
             container.appendChild(event);
         }
     });

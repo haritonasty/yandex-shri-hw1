@@ -17,21 +17,60 @@
   position: relative;
 }
 
-//.event:before {
-//  content: url("./cross.svg");
-//  position: absolute;
-//  top: 20px;
-//  right: 20px;
-//  fill: #666;
-//  stroke: #666;
-//}
-//
-//.event:after {
-//  content: url("./Next.svg");
-//  position: absolute;
-//  bottom: 20px;
-//  right: 20px;
-//}
+
+.event__close {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  fill: #666;
+  stroke: #666;
+  border-radius: 20px;
+  background-color: rgba(216, 216, 216, 0.90);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.event__close_white {
+  fill: $invert-color;
+  stroke: $invert-color;
+  background-color: #DB5341;
+}
+
+.event__open {
+  position: absolute;
+  bottom: 17px;
+  right: 17px;
+  border-radius: 20px;
+  background-color: rgba(216, 216, 216, 0.90);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.event-control {
+  visibility: hidden;
+}
+
+.event {
+  &:hover {
+    & .event-control {
+      visibility: visible;
+    }
+  }
+}
+
+@media (hover: none) {
+  .event-control {
+    display: none;
+  }
+}
 
 .event-middle {
   grid-column: span 3;

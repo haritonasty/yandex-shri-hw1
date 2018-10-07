@@ -3,6 +3,27 @@
 
 .main {
   padding: 20px;
+
+  @include respond-to(small-portrait) {
+    margin-top: 12vw;
+  }
+
+  @include respond-to(small-landscape) {
+    margin-top: 10vw;
+  }
+}
+
+.main-title {
+  $map: (320px: 24px, 1120px: 36px);
+  @include poly-fluid-sizing('font-size', $map);
+  font-family: Arial;
+  font-weight: bold;
+  margin: 0;
+
+
+  $map: (320px: 19px, 1120px: 32px);
+  @include poly-fluid-sizing('margin-bottom', $map);
+
 }
 
 .events {
@@ -11,7 +32,6 @@
   grid-auto-flow: dense;
 
   margin: 0 auto;
-  margin-top: 10vh;
 
   $map: (576px: 8px, 768px:8px, 1000px: 15px, 1120px: 20px);
   @include poly-fluid-sizing('grid-gap', $map);
@@ -33,6 +53,10 @@
   grid-row: span 3;
 }
 
+.main-title{
+  grid-column: span 3;
+}
+
 @media screen and (max-width: 576px) {
   .events {
     display: flex;
@@ -40,7 +64,7 @@
   }
 
   .event {
-    margin-bottom: 20px;
+    margin-bottom: 19px;
   }
 
   .event__source {
@@ -70,6 +94,10 @@
     grid-row: span 3;
   }
 
+  .main-title{
+    grid-column: span 6;
+  }
+
   .events {
     grid-template-columns: repeat(auto-fit, 140px);
     max-width: 915px;
@@ -91,6 +119,10 @@
   .event-big {
     grid-column: span 4;
     grid-row: span 3;
+  }
+
+  .main-title{
+    grid-column: span 6;
   }
 
   .events {
