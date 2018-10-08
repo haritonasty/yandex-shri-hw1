@@ -142,7 +142,7 @@ function templater(html, data) {
             }
 
             if (data['icon'] === 'cam') {
-                if (isTouchDevice()) {
+                if (detectIt.hasTouch) {
                     value = `
 <div class="event__data">
                  <div class="data__image">
