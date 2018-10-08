@@ -20,6 +20,7 @@
 }
 
 .data__button {
+  cursor: pointer;
   border: 0;
   font-weight: bold;
   cursor: pointer;
@@ -78,12 +79,14 @@
 }
 
 .data__music_composition-range {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .data__music_composition-range_input {
+  cursor: pointer;
   -webkit-appearance: none;
   background-color: $music-range-back;
   height: 2px;
@@ -132,6 +135,7 @@
   height: 44px;
   border-radius: 50%;
   background-color: $music-button-background;
+  cursor: pointer;
 }
 
 .music__icon_prev {
@@ -144,6 +148,7 @@
 }
 
 .data__music_composition-volume {
+  cursor: pointer;
   margin-right: 15px;
   @media screen and (max-width: 400px) {
     width: 35%;

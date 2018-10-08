@@ -4,7 +4,7 @@
 .event {
   grid-column: span 2;
   grid-row: span 1;
-  cursor: pointer;
+
   border-radius: 20px;
   background-color: $block-background;
   display: flex;
@@ -57,19 +57,20 @@
   visibility: hidden;
 }
 
-.event {
+.hasHover .event {
   &:hover {
     & .event-control {
       visibility: visible;
+      cursor: pointer;
     }
   }
 }
 
-@media (hover: none) {
-  .event-control {
-    display: none;
-  }
-}
+//@media (hover: none) {
+//  .event-control {
+//    display: none;
+//  }
+//}
 
 .event-middle {
   grid-column: span 3;
@@ -121,7 +122,7 @@
     background: linear-gradient(to right, rgba(219, 83, 65, 0), rgba(219, 83, 65, 1) 75%);
   }
 
-  .event {
+  .hasHover .event {
     &:hover {
       & .event__title:after {
         background: linear-gradient(to right, rgba(243, 243, 243, 0), rgba(243, 243, 243, 1) 75%);
@@ -134,7 +135,7 @@
 
 }
 
-.event:hover {
+.hasHover .event:hover {
   background-color: $block-hover-background;
   box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
   & .additional-info {
@@ -142,7 +143,7 @@
   }
 }
 
-.event-critical:hover {
+.hasHover .event-critical:hover {
   background-color: $critical-background;
 }
 
