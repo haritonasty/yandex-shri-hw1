@@ -26,7 +26,6 @@
     "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^2.0.2",
-    "gulp-rigger": "^0.5.8",
     "gulp-sass": "^4.0.1",
     "gulp-scss-lint": "^0.6.1",
     "gulp-sourcemaps": "^2.6.4",

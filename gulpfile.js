@@ -3,7 +3,6 @@ const gulp = require('gulp');
 const gulpIf = require('gulp-if');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
-const rigger = require('gulp-rigger');
 const uglifyes = require('gulp-uglifyes');
 const cleanCss = require('gulp-clean-css');
 // const scsslint = require('gulp-scss-lint');
@@ -42,7 +41,6 @@ gulp.task('scripts', function () {
 
 gulp.task('html', function () {
     return gulp.src('src/*.html')
-        .pipe(rigger())
         .pipe(gulp.dest('docs'))
 });
 
