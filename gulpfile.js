@@ -34,6 +34,7 @@ gulp.task('assets', function () {
 
 gulp.task('scripts', function () {
     return gulp.src('src/scripts/**/*.js')
+    // .pipe(gulpIf(isDevelopment, sourcemaps.write()))
         .pipe(uglifyes({ compress:true, mangle: true, ecma: 6 }))
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('docs'));
