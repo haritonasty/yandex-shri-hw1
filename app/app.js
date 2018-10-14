@@ -1,5 +1,12 @@
 const express = require('express');
+const cors = require('cors');
+const {events} = require('./events.js');
+
 const app = express();
+
+let startTime = null;
+
+app.use(cors());
 
 app.get('/status', (req, res) => {
     const currentTime = Date.now();
@@ -7,7 +14,13 @@ app.get('/status', (req, res) => {
     res.send(delay);
 });
 
-let startTime = null;
+app.get('/api/events', events);
+
+app.use((req, res) => {
+    res.status(404);
+    res.type('html');
+    res.send('<h1>Page not found</h1>');
+});
 
 app.listen(8000, () => {
     startTime = Date.now();
