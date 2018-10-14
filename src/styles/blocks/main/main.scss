@@ -14,6 +14,7 @@
   $map: (320px: 19px, 1120px: 32px);
   @include poly-fluid-sizing('padding-top', $map);
 
+  overflow-x: hidden;
 
 }
 
@@ -29,16 +30,18 @@
 
 }
 
+.main-wrapper{
+  margin: 0 auto;
+  position: relative;
+}
+
 .events {
+  width: 100%;
   display: grid;
   grid-gap: 20px;
   grid-auto-flow: dense;
-
-  margin: 0 auto;
-
   $map: (576px: 8px, 768px:8px, 1000px: 15px, 1120px: 20px);
   @include poly-fluid-sizing('grid-gap', $map);
-
 }
 
 .event {
@@ -73,7 +76,12 @@
   .event__source {
     width: 60%;
   }
+
+  .main-wrapper{
+    max-width: 80vw;
+  }
 }
+
 
 @media screen and (min-width: 768px) {
   .event__source {
@@ -103,8 +111,11 @@
 
   .events {
     grid-template-columns: repeat(auto-fit, 140px);
-    max-width: 915px;
     grid-gap: 15px;
+  }
+
+  .main-wrapper{
+    max-width: 915px;
   }
 
 }
@@ -130,6 +141,9 @@
 
   .events {
     grid-template-columns: repeat(auto-fit, 167px);
+  }
+
+  .main-wrapper{
     max-width: 1102px;
   }
 
