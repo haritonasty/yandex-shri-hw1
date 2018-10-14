@@ -1,10 +1,15 @@
 const express = require('express');
 const app = express();
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
+app.get('/status', (req, res) => {
+    const currentTime = Date.now();
+    const delay = new Date(currentTime - startTime).toUTCString().slice(17, 25);
+    res.send(delay);
 });
 
-app.listen(8000, function () {
+let startTime = null;
+
+app.listen(8000, () => {
+    startTime = Date.now();
     console.log('Example app listening on port 8000!');
 });
