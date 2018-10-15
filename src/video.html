@@ -52,7 +52,6 @@
         <div class="main-wrapper main-wrapper_video">
             <h1 class="main-title logger">Видеонаблюдение</h1>
         </div>
-        <!--<p class="logger">1</p>-->
 
         <div class="cameras">
             <button class="help-initializer hidden video-button">Запустить</button>
@@ -73,13 +72,13 @@
             <div class="regulator regulator_contrast">
                 <p>Контрастность:</p>
                 <input type="range" title="indicator" min="0" max="200" value="100"
-                       class="regulator__value_current"
+                       class="regulator__value_current contrast"
                        oninput="applyFilter('contrast', this.value)">
             </div>
             <div class="regulator regulator_brightness">
                 <p>Яркость:</p>
                 <input type="range" title="indicator" min="0" max="200" value="100"
-                       class="regulator__value_current"
+                       class="regulator__value_current brightness"
                        oninput="applyFilter('brightness', this.value)">
             </div>
             <div>

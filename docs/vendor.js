@@ -447,6 +447,19 @@ class Camera {
         };
         this.cameraVolume = null;
         this.fullscreen = false;
+
+        let context = new AudioContext();
+        let source = context.createMediaElementSource(this.video);
+        let analyser = context.createAnalyser();
+        analyser.smoothingTimeConstant = 0.9;
+        analyser.fftSize = 32;
+        source.connect(analyser);
+        analyser.connect(context.destination);
+        this.cameraVolume = {
+            context: context,
+            source: source,
+            analyser: analyser
+        };
     }
 
     toggleFullscreen() {
@@ -519,7 +532,9 @@ function initVideo(video, canvas, url) {
         currentCamera.toggleFullscreen();
         brightness.value = currentCamera.filters.brightness;
         contrast.value = currentCamera.filters.contrast;
-        equalize(currentCamera);
+        currentCamera.cameraVolume.context.resume().then(() => {
+            equalize(currentCamera);
+        });
     }
 
 
@@ -565,20 +580,6 @@ function returnFromFullscreen() {
 
 
 function equalize(camera) {
-    if (camera.cameraVolume === null) {
-        let context = new AudioContext();
-        let source = context.createMediaElementSource(camera.video);
-        let analyser = context.createAnalyser();
-        analyser.smoothingTimeConstant = 0.9;
-        analyser.fftSize = 32;
-        source.connect(analyser);
-        analyser.connect(context.destination);
-        camera.cameraVolume = {
-            context: context,
-            source: source,
-            analyser: analyser
-        };
-    }
 
     function draw() {
         let array = new Uint8Array(camera.cameraVolume.analyser.fftSize);
