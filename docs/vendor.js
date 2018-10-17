@@ -483,107 +483,87 @@ function initVideo(video, canvas, url) {
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
             video.play()
-                .then(() => {
-                    if (!video.paused) {
-                        video.classList.add('visually-hidden');
-                        initializer.classList.add('hidden');
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        ctx = canvas.getContext('2d');
-                        camera = new Camera(video, canvas);
-                        setOfCameras.push(camera);
-                        camera.canvas.addEventListener('click', canvasChecker);
-                        loop();
-                    } else {
-                    }
-                })
-                .catch(() => {
-                    initializer.classList.remove('hidden');
-                    initVideo(video, canvas, url)
-                })
+                .then(goPlay)
+                .catch(tryPlay);
         })
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = url;
         video.addEventListener('loadedmetadata', function () {
             video.play()
-                .then(() => {
-                    if (!video.paused) {
-                        video.classList.add('visually-hidden');
-                        initializer.classList.add('hidden');
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        ctx = canvas.getContext('2d');
-                        camera = new Camera(video, canvas);
-                        setOfCameras.push(camera);
-                        camera.canvas.addEventListener('click', canvasChecker);
-                        loop();
-                    }
-                })
-                .catch(() => {
-                    initializer.classList.remove('hidden');
-                    initVideo(video, canvas, url)
-                })
+                .then(goPlay)
+                .catch(tryPlay);
         });
     }
 
-    function canvasChecker(e) {
-        const activeCamera = setOfCameras.find(item => item.fullscreen === true);
-        if (activeCamera) {
-            activeCamera.toggleFullscreen();
-            activeCamera.canvas.style.zIndex = '1';
-            if (activeCamera.canvas === e.target) return;
+    const goPlay = () => {
+        if (!video.paused) {
+            video.classList.add('visually-hidden');
+            initializer.classList.add('hidden');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx = canvas.getContext('2d');
+            camera = new Camera(video, canvas);
+            setOfCameras.push(camera);
+            camera.canvas.addEventListener('click', canvasChecker);
+            loop();
         }
-        let currentCamera = setOfCameras.find(item => item.canvas === e.target);
-        currentCamera.canvas.style.zIndex='5';
-        currentCamera.toggleFullscreen();
-        brightness.value = currentCamera.filters.brightness;
-        contrast.value = currentCamera.filters.contrast;
-        currentCamera.cameraVolume.context.resume().then(() => {
-            equalize(currentCamera);
-        });
-    }
+    };
 
+    const tryPlay = () => {
+        initializer.classList.remove('hidden');
+        initVideo(video, canvas, url);
+    };
 
-    function loop() {
+    const loop = () => {
         if (camera.fullscreen) {
             ctx.filter = `brightness(${camera.filters.brightness}%) contrast(${camera.filters.contrast}%)`;
         }
         ctx.drawImage(camera.video, 0, 0, camera.canvas.width, camera.canvas.height);
         requestAnimationFrame(loop);
-    }
+    };
 }
 
+const canvasChecker = (e) => {
+    const activeCamera = setOfCameras.find(item => item.fullscreen === true);
+    if (activeCamera) {
+        activeCamera.toggleFullscreen();
+        activeCamera.canvas.style.zIndex = '1';
+        if (activeCamera.canvas === e.target) return;
+    }
+    let currentCamera = setOfCameras.find(item => item.canvas === e.target);
+    currentCamera.canvas.style.zIndex = '5';
+    currentCamera.toggleFullscreen();
+    brightness.value = currentCamera.filters.brightness;
+    contrast.value = currentCamera.filters.contrast;
+    currentCamera.cameraVolume.context.resume().then(() => {
+        equalize(currentCamera);
+    });
+};
 
-function applyFilter(type, value) {
+
+const applyFilter = (type, value) => {
     const activeCamera = setOfCameras.find(item => item.fullscreen === true);
 
     if (activeCamera) {
         if (type === 'brightness') {
-            updateBrightness(activeCamera, value);
+            activeCamera.filters.brightness = value;
         }
 
         if (type === 'contrast') {
-            updateContrast(activeCamera, value);
+            activeCamera.filters.contrast = value;
         }
     }
-}
+};
 
-function updateBrightness(camera, value) {
-    camera.filters.brightness = value;
-}
 
-function updateContrast(camera, value) {
-    camera.filters.contrast = value;
-}
-
-function returnFromFullscreen() {
+const returnFromFullscreen = () => {
     const activeCamera = setOfCameras.find(item => item.fullscreen === true);
     if (activeCamera) {
         activeCamera.toggleFullscreen();
         activeCamera.canvas.style.zIndex = '1';
     }
     button.classList.add('camera-button_hidden');
-}
+};
 
 
 function equalize(camera) {
