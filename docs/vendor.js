@@ -487,6 +487,8 @@ function initVideo(video, canvas, url) {
                     if (!video.paused) {
                         video.classList.add('visually-hidden');
                         initializer.classList.add('hidden');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
                         ctx = canvas.getContext('2d');
                         camera = new Camera(video, canvas);
                         setOfCameras.push(camera);
@@ -506,13 +508,15 @@ function initVideo(video, canvas, url) {
             video.play()
                 .then(() => {
                     if (!video.paused) {
-                        initializer.classList.add('hidden');
                         video.classList.add('visually-hidden');
+                        initializer.classList.add('hidden');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
                         ctx = canvas.getContext('2d');
                         camera = new Camera(video, canvas);
                         setOfCameras.push(camera);
                         camera.canvas.addEventListener('click', canvasChecker);
-                        loop()
+                        loop();
                     }
                 })
                 .catch(() => {
@@ -526,9 +530,11 @@ function initVideo(video, canvas, url) {
         const activeCamera = setOfCameras.find(item => item.fullscreen === true);
         if (activeCamera) {
             activeCamera.toggleFullscreen();
+            activeCamera.canvas.style.zIndex = '1';
             if (activeCamera.canvas === e.target) return;
         }
         let currentCamera = setOfCameras.find(item => item.canvas === e.target);
+        currentCamera.canvas.style.zIndex='5';
         currentCamera.toggleFullscreen();
         brightness.value = currentCamera.filters.brightness;
         contrast.value = currentCamera.filters.contrast;
@@ -539,11 +545,11 @@ function initVideo(video, canvas, url) {
 
 
     function loop() {
+        if (camera.fullscreen) {
+            ctx.filter = `brightness(${camera.filters.brightness}%) contrast(${camera.filters.contrast}%)`;
+        }
+        ctx.drawImage(camera.video, 0, 0, camera.canvas.width, camera.canvas.height);
         requestAnimationFrame(loop);
-        camera.canvas.width = camera.video.videoWidth;
-        camera.canvas.height = camera.video.videoHeight;
-        ctx.filter = `brightness(${camera.filters.brightness}%) contrast(${camera.filters.contrast}%)`;
-        ctx.drawImage(camera.video, 0, 0);
     }
 }
 
@@ -574,6 +580,7 @@ function returnFromFullscreen() {
     const activeCamera = setOfCameras.find(item => item.fullscreen === true);
     if (activeCamera) {
         activeCamera.toggleFullscreen();
+        activeCamera.canvas.style.zIndex = '1';
     }
     button.classList.add('camera-button_hidden');
 }
@@ -591,7 +598,6 @@ function equalize(camera) {
         }
         average /= array.length;
         vol.style.width = `${average * 1000 / 200}%`;
-        console.log(average);
 
         if (camera.fullscreen) {
             requestAnimationFrame(draw);
