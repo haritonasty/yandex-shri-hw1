@@ -126,6 +126,7 @@ function toggleMainNav() {
     menuNav.classList.toggle('main-nav__hidden');
 }
 const container = document.querySelector('.events');
+const serverNode = '192.168.31.46'; //поменяйте это поле в соответсвии с вашим урлом
 
 let template = `
     <div class="event {{ type }} {{ size }}">
@@ -160,7 +161,7 @@ let template = `
 let eventsStr = '';
 
 if (container) {
-    fetch('./events.json')
+    fetch(`http://${serverNode}:8000/api/events`)
         .then(res => res.json())
         .then(data => {
             const events = data.events;
