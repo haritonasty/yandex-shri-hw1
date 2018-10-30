@@ -7,8 +7,9 @@
     "module": "amd",
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
     "lib": [
-      "es7",
-      "dom"
+      "es6",
+      "dom",
+      "es2015.symbol"
     ],
     /* Specify library files to be included in the compilation. */
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
@@ -57,7 +58,7 @@
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
-     "types": ["hls.js"],                           /* Type declaration files to be included in compilation. */
+     "types": ["hls.js", "node", "express"],                           /* Type declaration files to be included in compilation. */
     "allowSyntheticDefaultImports": true,
     /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     "esModuleInterop": true
