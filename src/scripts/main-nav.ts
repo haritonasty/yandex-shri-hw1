@@ -1,5 +1,5 @@
 import { template } from 'template';
-// import { video } from 'video';
+import 'video';
 
 const menuNavOpen = document.querySelector('.button-burger');
 const menuNavClose: HTMLButtonElement | null = document.querySelector('.button-close');
@@ -18,4 +18,3 @@ function toggleMainNav(): void {
 }
 
 template();
-//video();

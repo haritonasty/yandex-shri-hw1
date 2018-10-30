@@ -1,7 +1,6 @@
-define(["require", "exports", "template"], function (require, exports, template_1) {
+define(["require", "exports", "template", "video"], function (require, exports, template_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // import { video } from 'video';
     const menuNavOpen = document.querySelector('.button-burger');
     const menuNavClose = document.querySelector('.button-close');
     const menuNav = document.querySelector('.main-nav');
@@ -18,4 +17,3 @@ define(["require", "exports", "template"], function (require, exports, template_
     }
     template_1.template();
 });
-//video();
