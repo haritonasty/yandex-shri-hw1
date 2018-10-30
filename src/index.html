@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="./style.css">
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="noindex">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
-<body>
 <div class="page">
     <header class="header page__header">
         <div class="header__inner">
@@ -166,7 +166,9 @@
         </g>
     </symbol>
 </svg>
+<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<!--<script src="./vendor.js"></script>-->
+<script>document.addEventListener("DOMContentLoaded",function() {require(["main-nav"]);},false);</script>
 
-<script src="./vendor.js"></script>
 </body>
 </html>

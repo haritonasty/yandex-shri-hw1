@@ -10,6 +10,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync').create();
 
+var ts = require("gulp-typescript");
+var tsProject = ts.createProject("tsconfig.json");
+
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 gulp.task('styles', function () {
@@ -24,19 +27,26 @@ gulp.task('styles', function () {
         .pipe(gulp.dest('docs'));
 });
 
-gulp.task('clean', function () { return del('public'); });
+gulp.task('clean', function () { return del('docs'); });
 
 gulp.task('assets', function () {
     return gulp.src('src/assets/**', { since: gulp.lastRun('assets') })
         .pipe(gulp.dest('docs'));
 });
 
-gulp.task('scripts', function () {
-    return gulp.src('src/scripts/**/*.js')
-    .pipe(gulpIf(isDevelopment, sourcemaps.write()))
+// gulp.task('scripts', function () {
+//     return gulp.src('src/scripts/**/*.js')
+//         .pipe(gulpIf(isDevelopment, sourcemaps.write()))
+//         // .pipe(uglifyes({ compress:true, mangle: true, ecma: 6 }))
+//         .pipe(concat('vendor.js'))
+//         .pipe(gulp.dest('docs'));
+// });
+
+gulp.task('scripts-ts', function () {
+    return gulp.src('src/scripts/*.ts')
+        .pipe(tsProject())
+        .js.pipe(gulp.dest('docs'))
         // .pipe(uglifyes({ compress:true, mangle: true, ecma: 6 }))
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('docs'));
 });
 
 gulp.task('html', function () {
@@ -44,12 +54,12 @@ gulp.task('html', function () {
         .pipe(gulp.dest('docs'))
 });
 
-gulp.task('build', gulp.series('clean',gulp.parallel('styles', 'assets', 'scripts', 'html')));
+gulp.task('build', gulp.series('clean',gulp.parallel('styles', 'assets', 'scripts-ts', 'html')));
 
 gulp.task('watch', function () {
     gulp.watch('src/**/*.html', gulp.series('html'));
     gulp.watch('src/styles/**/*.scss', gulp.series('styles'));
-    gulp.watch('src/scripts/**/*.js', gulp.series('scripts'));
+    gulp.watch('src/scripts/**/*.ts', gulp.series('scripts-ts'));
     gulp.watch('src/assets/**/*.*', gulp.series('assets'));
 });
 

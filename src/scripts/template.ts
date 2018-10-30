@@ -1,15 +1,11 @@
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "touchable", "detect-it"], function (require, exports, touchable_1, detect_it_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    touchable_1 = __importDefault(touchable_1);
-    function template() {
-        // tslint:disable:max-line-length
-        // tslint:disable:no-parameter-reassignment
-        const container = document.querySelector('.events');
-        const template = `
+import touchable from 'touchable';
+import { detectIt } from 'detect-it';
+
+export function template() {
+// tslint:disable:max-line-length
+// tslint:disable:no-parameter-reassignment
+  const container: HTMLElement | null = document.querySelector('.events');
+  const template: string = `
     <div class="event {{ type }} {{ size }}">
         <div class="event__close event-control event-control_disabled">
             <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
@@ -38,47 +34,46 @@ define(["require", "exports", "touchable", "detect-it"], function (require, expo
 
     </div>
 `;
-        let eventsStr = '';
-        if (container !== null) {
-            fetch('./events.json')
-                .then(res => res.json())
-                .then((data) => {
-                const events = data.events;
-                for (const i in events)
-                    eventsStr += templater(template, events[i]);
-                container.innerHTML += eventsStr;
+  let eventsStr: string = '';
+  if (container !== null) {
+    fetch('./events.json')
+            .then(res => res.json())
+            .then((data) => {
+              const events = data.events;
+              for (const i in events) eventsStr += templater(template, events[i]);
+              container.innerHTML += eventsStr;
             })
-                .then(() => touchable_1.default());
+            .then(() => touchable());
+  }
+
+  function templater(html: string, data: any) {
+    for (const x in data) {
+      let value = data[x];
+      if (x === 'type') {
+        if (data[x] === 'critical') {
+          value = 'event-critical';
+          html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon event__icon_critical');
+          html = html.replace(new RegExp('event__close', 'ig'), 'event__close event__close_white');
+          html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title event__title_critical');
         }
-        function templater(html, data) {
-            for (const x in data) {
-                let value = data[x];
-                if (x === 'type') {
-                    if (data[x] === 'critical') {
-                        value = 'event-critical';
-                        html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon event__icon_critical');
-                        html = html.replace(new RegExp('event__close', 'ig'), 'event__close event__close_white');
-                        html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title event__title_critical');
-                    }
-                    html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon');
-                    html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title');
-                }
-                if (x === 'size') {
-                    value = data[x] === 'l' ? 'event-big' : data[x] === 'm' ? 'event-middle' : '';
-                }
-                if (x === 'description' && data[x]) {
-                    html = html.replace(new RegExp('additional-info_disabled', 'ig'), '');
-                    html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info');
-                }
-                else {
-                    html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info event__info_last');
-                }
-                if (x === 'description' && !data['data']) {
-                    html = html.replace(new RegExp('{{\\s?' + 'data' + '\\s?}}', 'ig'), '');
-                }
-                if (x === 'data') {
-                    if (data['icon'] === 'thermal') {
-                        value = `
+        html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon');
+        html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title');
+      }
+      if (x === 'size') {
+        value = data[x] === 'l' ? 'event-big' : data[x] === 'm' ? 'event-middle' : '';
+      }
+      if (x === 'description' && data[x]) {
+        html = html.replace(new RegExp('additional-info_disabled', 'ig'), '');
+        html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info');
+      } else {
+        html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info event__info_last');
+      }
+      if (x === 'description' && !data['data']) {
+        html = html.replace(new RegExp('{{\\s?' + 'data' + '\\s?}}', 'ig'), '');
+      }
+      if (x === 'data') {
+        if (data['icon'] === 'thermal') {
+          value = `
                     <div class="event__data">
                  <div class="data__climate">
                         <div><span class="climate__type">Температура: </span><span class="climate__value">24 С</span></div>
@@ -86,9 +81,9 @@ define(["require", "exports", "touchable", "detect-it"], function (require, expo
                     </div>
                     </div>
                 `;
-                    }
-                    if (data['icon'] === 'fridge') {
-                        value = `
+        }
+        if (data['icon'] === 'fridge') {
+          value = `
                  <div class="event__data">
                  <div class="data__buttons">
                         <button class="data__button">Да</button>
@@ -96,9 +91,9 @@ define(["require", "exports", "touchable", "detect-it"], function (require, expo
                     </div>
                     </div>
                 `;
-                    }
-                    if (data['icon'] === 'music') {
-                        value = `
+        }
+        if (data['icon'] === 'music') {
+          value = `
                     <div class="event__data">
                     <div class="data__music">
                         <div class="data__music_composition">
@@ -126,10 +121,10 @@ define(["require", "exports", "touchable", "detect-it"], function (require, expo
                     </div>
                 </div>
                 `;
-                    }
-                    if (data['icon'] === 'cam') {
-                        if (detect_it_1.detectIt.hasTouch) {
-                            value = `
+        }
+        if (data['icon'] === 'cam') {
+          if (detectIt.hasTouch) {
+            value = `
 <div class="event__data">
                  <div class="data__image data__image_wrapper-touchable">
                         <!--<picture>-->
@@ -150,9 +145,8 @@ define(["require", "exports", "touchable", "detect-it"], function (require, expo
                     </div>
                     </div>
                 `;
-                        }
-                        else {
-                            value = `
+          } else {
+            value = `
            <div class="event__data">
                  <div class="data__image">
                         <!--<picture>-->
@@ -163,23 +157,21 @@ define(["require", "exports", "touchable", "detect-it"], function (require, expo
                              src="cam.png" alt="Снимок камеры с пылесосом">
                         <!--</picture>-->
                     </div></div>`;
-                        }
-                    }
-                    if (data['icon'] === 'stats') {
-                        value = `
+          }
+        }
+        if (data['icon'] === 'stats') {
+          value = `
 <div class="event__data">
                  <div class="data__image">
                         <img src="./Richdata.svg" alt="График">
                     </div>
                     </div>
                 `;
-                    }
-                }
-                const re = `{{\\s?${x}\\s?}}`;
-                html = html.replace(new RegExp(re, 'ig'), value);
-            }
-            return html;
         }
+      }
+      const re = `{{\\s?${x}\\s?}}`;
+      html = html.replace(new RegExp(re, 'ig'), value);
     }
-    exports.template = template;
-});
+    return html;
+  }
+}
