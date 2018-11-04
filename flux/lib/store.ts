@@ -1,12 +1,14 @@
 import {IAction} from "./action";
 import {IView} from "./view";
 
+type CallbackFunction = () => void;
+
 interface IStore {
     getState(): object,
     setState(state: object): void,
     subscribe(view: IView): this,
     checkAction(action: IAction): void,
-    setResponses(responses: Array<IAction>): this
+    setResponses(responses: Map<string, CallbackFunction>): this
 }
 
 class Store implements IStore {
@@ -34,22 +36,22 @@ class Store implements IStore {
     }
 
     private change(): void {
-        this.observers.forEach(view => view.update());
+        this.observers.forEach(view => view.update(this.state));
     }
 
     checkAction(action: IAction): void {
         if (this.responses.has(action.type)) {
-            const payload = this.responses.get(action.type);
-            if (payload) {
-                payload(action.payload);
+            const cb = this.responses.get(action.type);
+            if (cb) {
+                cb(action.data);
                 this.change();
             }
         }
     }
 
-    setResponses(responses: Array<IAction>): this {
-        responses.forEach(action => {
-            if (action.payload) this.responses.set(action.type, action.payload.bind(this));
+    setResponses(responses: Map<string, CallbackFunction>): this {
+        responses.forEach((value, key) => {
+            if (value) this.responses.set(key, value.bind(this));
         });
         return this;
     }

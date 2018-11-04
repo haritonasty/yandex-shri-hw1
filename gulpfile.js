@@ -23,14 +23,14 @@ gulp.task('scripts-ts', function () {
 });
 
 gulp.task('html', function () {
-    return gulp.src('flux/test/*.html')
+    return gulp.src('flux/*.html')
         .pipe(gulp.dest('dist'))
 });
 
 gulp.task('build', gulp.series('clean',gulp.parallel('scripts-ts', 'html')));
 
 gulp.task('watch', function () {
-    gulp.watch('flux/test/*.html', gulp.series('html'));
+    gulp.watch('flux/*.html', gulp.series('html'));
     gulp.watch('flux/**/*.ts', gulp.series('scripts-ts'));
 });
 

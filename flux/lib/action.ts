@@ -1,17 +1,15 @@
-type CallbackFunction = () => void;
-
 interface IAction {
     type: string,
-    payload: CallbackFunction | null
+    data?: any
 }
 
 class Action implements IAction {
     public type: string;
-    public payload: CallbackFunction | null;
+    public data?: any;
 
-    constructor(type: string, payload: CallbackFunction | null = null) {
+    constructor(type: string, data?: any) {
         this.type = type;
-        this.payload = payload;
+        this.data = data;
     }
 }
 

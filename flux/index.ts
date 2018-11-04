@@ -1,65 +1,46 @@
 import Flux from "./lib/index";
-import {View} from "./lib/view";
-import {Action} from "./lib/action";
 
+const dispatcher = new Flux.Dispatcher();
+const store = new Flux.Store({count: 5});
+const initState: object = store.getState();
 
-const Navigation: string = `
-<nav>
-<a class="main-nav__item-link" href="#" data-event="click=changePage">{{nav-item}}</a>
-<a class="main-nav__item-link" href="" data-event="click=changePage">{{nav-item}}</a>
-<a class="main-nav__item-link" href="#" data-event="click=changePage">{{nav-item}}</a>
-</nav>`;
-
-const ROOT: string = `
-<div id="navigation">зашлушка для навигации</div>
-<div id="page">заглушка для контента</div>
+const Counter: string = `
+<button data-event="click=dec" class="button button_type_inc">-</button>
+    <span class="label" data-deps="count">{{count}}</span>
+<button data-event="click=inc" class="button button_type_dec">+</button>
 `;
 
 const root = document.querySelector<HTMLElement>('#root');
 
-if (root) {
-    const ViewRoot = new Flux.View(root, ROOT);
+const actions = new Map()
+    .set('inc', () => dispatcher.dispatch(new Flux.Action('INCREASE')))
+    .set('dec', () => dispatcher.dispatch(new Flux.Action('DECREASE')));
+
+
+class CounterView extends Flux.View {
+    constructor() {
+        super(root, Counter, initState, actions);
+    }
+
+    update(state: object) {
+        this.node.innerHTML = this.templater(this.template, state);
+        this.initActions(this.node);
+    };
 }
 
-const navigation = document.querySelector<HTMLElement>('#navigation');
+const callbacks = new Map()
+    .set('INCREASE', function () {
+            // @ts-ignore
+            this.state.count++;
+        })
+    .set('DECREASE', function () {
+            // @ts-ignore
+            this.state.count--;
+        });
 
-if (navigation) {
-    const store = new Flux.Store({nav: ['События', 'Видеонаблюдение', 'Сводка']});
-    const ViewNavigation = new Flux.View(navigation, Navigation);
-}
-// const dispatcher = new Flux.Dispatcher();
-//
-// const actions = new Map();
-// actions.set('inc', () => dispatcher.dispatch(new Action('INCREASE')));
-// actions.set('dec', () => dispatcher.dispatch(new Action('DECREASE')));
-//
-//
-// const callbacks = [
-//     new Action(
-//         'INCREASE',
-//         function () {
-//             // @ts-ignore
-//             this.state.count++;
-//         }
-//     ),
-//     new Action(
-//         'DECREASE',
-//         function () {
-//             // @ts-ignore
-//             this.state.count--;
-//         }
-//     ),
-// ];
-//
-// let view: View;
-//
-// if (root) {
-//     view = new Flux.View(root, store, Counter, actions);
-//     store.subscribe(view).setResponses(callbacks);
-//     dispatcher.register(store);
-// }
+const view = new CounterView();
 
-
-
+store.subscribe(view).setResponses(callbacks);
+dispatcher.register(store);
 
 

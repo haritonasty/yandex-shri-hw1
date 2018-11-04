@@ -1,52 +1,38 @@
-import {Store} from "./store";
-
 type CallbackFunction = () => void;
 
-
 interface IView {
-    update(): void
+    update(state: object): void
 }
 
+abstract class View implements IView {
+    protected node: HTMLElement;
+    protected template: string;
+    protected actions?: Map<string, CallbackFunction>;
 
-class View implements IView {
-    private node: HTMLElement;
-    private template: string;
-    private actions?: Map<string, CallbackFunction>;
-    private store?: Store;
-    private lastState?: object;
-    private nodes: Array<object>;
-
-    constructor(node: HTMLElement, temp: string, store?: Store, actions?: Map<string, CallbackFunction>) {
+    constructor(node: HTMLElement | null, temp: string, initState?: object, actions?: Map<string, CallbackFunction>) {
+        if (node === null) throw new Error("Error with mounting in DOM. DOMNode wasn't found.");
         this.node = node;
-        this.nodes = [];
         this.template = temp;
-        if (store) {
-            this.store = store;
+        if (actions) {
             this.actions = actions;
-            this.lastState = this.getData();
-            this.node.innerHTML = this.templater(this.template, this.lastState);
-            this.initActions(this.node);
-        } else {
-            this.node.innerHTML = this.template;
         }
-
+        if (initState) {
+            this.update(initState);
+        }
     }
 
-    private getData(): object {
-        if (this.store) return this.store.getState();
-        else return {};
-    }
+    abstract update(state: object): void;
 
-    private initActions(el: HTMLElement): void {
+    protected initActions(el: HTMLElement): void {
         const events: NodeListOf<HTMLElement> | null = el.querySelectorAll('[data-event]');
         if (events) {
             const eventsArray: Array<HTMLElement> = Array.from(events);
             eventsArray.forEach((eventNode: HTMLElement) => {
                 const event: string | null = eventNode.getAttribute('data-event');
-                if (event && this.actions) {
+                if (event) {
                     const eventData: Array<string> = event.split('=');
                     const eventType = eventData[0];
-                    const eventAction: CallbackFunction | undefined = this.actions.get(eventData[1]);
+                    const eventAction: CallbackFunction | undefined = (this.actions as any).get(eventData[1]);
                     if (eventAction) {
                         eventNode.addEventListener(eventType, eventAction);
                     }
@@ -55,15 +41,7 @@ class View implements IView {
         }
     }
 
-
-    update(): void {
-        const newState: object = this.getData();
-
-        this.node.innerHTML = this.templater(this.template, newState);
-        this.initActions(this.node);
-    }
-
-    private templater(template: string, data: any): string {
+    protected templater(template: string, data: any): string {
         const matches: Array<string> | null = template.match(/{{.+?}}/g);
         let html = template;
         if (matches) {
@@ -76,6 +54,14 @@ class View implements IView {
         }
         return html;
     }
+
+
+    // update(): void {
+    //     this.node.innerHTML = this.templater(this.template, this.getData());
+    //     this.initActions(this.node);
+    // }
+
+
 }
 
 export {IView, View};
