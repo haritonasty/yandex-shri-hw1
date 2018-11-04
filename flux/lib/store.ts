@@ -5,7 +5,6 @@ type CallbackFunction = () => void;
 
 interface IStore {
     getState(): object,
-    setState(state: object): void,
     subscribe(view: IView): this,
     checkAction(action: IAction): void,
     setResponses(responses: Map<string, CallbackFunction>): this
@@ -24,10 +23,6 @@ class Store implements IStore {
 
     getState(): object {
         return this.state;
-    }
-
-    setState(state: object): void {
-        this.state = state;
     }
 
     subscribe(view: IView): this {

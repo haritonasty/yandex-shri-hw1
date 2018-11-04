@@ -1,7 +1,7 @@
 import {Store} from "./store";
 import {IAction} from "./action";
 
-export default class Dispatcher {
+ class Dispatcher {
     private callbacks: Array<Function>;
 
     constructor() {
@@ -21,3 +21,5 @@ export default class Dispatcher {
         console.log(`ACTION: ${action}`);
     }
 }
+
+export default new Dispatcher();

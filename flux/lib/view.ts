@@ -1,7 +1,7 @@
 type CallbackFunction = () => void;
 
 interface IView {
-    update(state: object): void
+    update(state?: object): this
 }
 
 abstract class View implements IView {
@@ -9,19 +9,16 @@ abstract class View implements IView {
     protected template: string;
     protected actions?: Map<string, CallbackFunction>;
 
-    constructor(node: HTMLElement | null, temp: string, initState?: object, actions?: Map<string, CallbackFunction>) {
+    constructor(node: HTMLElement | null, temp: string, actions?: Map<string, CallbackFunction>) {
         if (node === null) throw new Error("Error with mounting in DOM. DOMNode wasn't found.");
         this.node = node;
         this.template = temp;
         if (actions) {
             this.actions = actions;
         }
-        if (initState) {
-            this.update(initState);
-        }
     }
 
-    abstract update(state: object): void;
+    abstract update(state?: object): this;
 
     protected initActions(el: HTMLElement): void {
         const events: NodeListOf<HTMLElement> | null = el.querySelectorAll('[data-event]');
