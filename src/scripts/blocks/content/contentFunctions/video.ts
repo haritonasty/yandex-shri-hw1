@@ -1,18 +1,15 @@
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    hls_js_1 = __importDefault(hls_js_1);
-    const setOfCameras = [];
-    const button = document.querySelector('.camera-button');
-    const brightness = document.querySelector('.brightness');
-    const contrast = document.querySelector('.contrast');
-    const initializer = document.querySelector('.help-initializer');
-    const vol = document.querySelector('.volume_active');
-    const settings = document.querySelector('.settings');
-    const applyFilter = (type, value) => {
+import hlsJs from 'hls.js';
+
+const videoLogic = () => {
+
+    const setOfCameras: Camera[] = [];
+    const button: HTMLButtonElement | null = document.querySelector('.camera-button');
+    const brightness: HTMLInputElement | null = document.querySelector('.brightness');
+    const contrast: HTMLInputElement | null = document.querySelector('.contrast');
+    const initializer: HTMLButtonElement | null = document.querySelector('.help-initializer');
+    const vol: HTMLDivElement | null = document.querySelector('.volume_active');
+    const settings: HTMLDivElement | null = document.querySelector('.settings');
+    const applyFilter = (type: string, value: string) => {
         const activeCamera = setOfCameras.find(item => item.fullscreen);
         if (activeCamera) {
             if (type === 'brightness') {
@@ -29,31 +26,48 @@ define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
             activeCamera.toggleFullscreen();
             activeCamera.canvas.style.zIndex = '1';
         }
-        if (button)
-            button.classList.add('camera-button_hidden');
+        if (button) button.classList.add('camera-button_hidden');
     };
     if (button) {
         button.addEventListener('click', returnFromFullscreen);
     }
     if (brightness) {
-        brightness.addEventListener('input', (e) => {
+        brightness.addEventListener('input', (e: Event) => {
             if (e.target) {
-                applyFilter('brightness', e.target.value);
+                applyFilter('brightness', (e.target as HTMLInputElement).value);
             }
         });
     }
     if (contrast) {
-        contrast.addEventListener('input', (e) => {
+        contrast.addEventListener('input', (e: Event) => {
             if (e.target) {
-                applyFilter('contrast', e.target.value);
+                applyFilter('contrast', (e.target as HTMLInputElement).value);
             }
         });
     }
+
+    interface IFilters {
+        brightness: number;
+        contrast: number;
+    }
+
+    interface IVolume {
+        context: AudioContext;
+        source: MediaElementAudioSourceNode;
+        analyser: AnalyserNode;
+    }
+
     class Camera {
-        constructor(video, canvas) {
+        public video: HTMLVideoElement;
+        public canvas: HTMLCanvasElement;
+        public filters: IFilters;
+        public cameraVolume: IVolume | null;
+        public fullscreen: boolean;
+
+        constructor(video: HTMLVideoElement, canvas: HTMLCanvasElement) {
             this.video = video;
             this.canvas = canvas;
-            this.filters = { brightness: 100, contrast: 100 };
+            this.filters = {brightness: 100, contrast: 100};
             this.cameraVolume = null;
             this.fullscreen = false;
             const context = new AudioContext();
@@ -63,33 +77,34 @@ define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
             analyser.fftSize = 32;
             source.connect(analyser);
             analyser.connect(context.destination);
-            this.cameraVolume = { context, source, analyser };
+            this.cameraVolume = {context, source, analyser};
         }
-        toggleFullscreen() {
+
+        toggleFullscreen(): void {
             this.canvas.classList.toggle('fullscreen');
             this.video.muted = !this.video.muted;
             this.fullscreen = !this.fullscreen;
-            if (button)
-                button.classList.toggle('camera-button_hidden');
-            if (settings)
-                settings.classList.toggle('settings-hidden');
+            if (button) button.classList.toggle('camera-button_hidden');
+            if (settings) settings.classList.toggle('settings-hidden');
         }
     }
-    const initVideo = (video, canvas, url) => {
-        let camera;
-        let ctx;
+
+    const initVideo = (video: HTMLVideoElement | null,
+                       canvas: HTMLCanvasElement | null,
+                       url: string): void => {
+        let camera: Camera;
+        let ctx: CanvasRenderingContext2D | null;
         if (video && canvas) {
-            if (hls_js_1.default.isSupported()) {
-                const hls = new hls_js_1.default();
+            if (hlsJs.isSupported()) {
+                const hls = new hlsJs();
                 hls.loadSource(url);
                 hls.attachMedia(video);
-                hls.on(hls_js_1.default.Events.MANIFEST_PARSED, () => {
+                hls.on(hlsJs.Events.MANIFEST_PARSED, () => {
                     video.play()
                         .then(goPlay)
                         .catch(tryPlay);
                 });
-            }
-            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = url;
                 video.addEventListener('loadedmetadata', () => {
                     video.play()
@@ -102,8 +117,7 @@ define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
             if (video && canvas) {
                 if (!video.paused) {
                     video.classList.add('visually-hidden');
-                    if (initializer)
-                        initializer.classList.add('hidden');
+                    if (initializer) initializer.classList.add('hidden');
                     canvas.width = video.videoWidth;
                     canvas.height = video.videoHeight;
                     ctx = canvas.getContext('2d');
@@ -115,8 +129,7 @@ define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
             }
         };
         const tryPlay = () => {
-            if (initializer)
-                initializer.classList.remove('hidden');
+            if (initializer) initializer.classList.remove('hidden');
             initVideo(video, canvas, url);
         };
         const loop = () => {
@@ -130,16 +143,15 @@ define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
             }
         };
     };
-    const canvasChecker = (e) => {
-        const activeCamera = setOfCameras.find((item) => item.fullscreen);
+    const canvasChecker = (e: Event) => {
+        const activeCamera: Camera | undefined = setOfCameras.find((item: Camera) => item.fullscreen);
         if (activeCamera) {
             activeCamera.toggleFullscreen();
             activeCamera.canvas.style.zIndex = '1';
-            if (activeCamera.canvas === e.target)
-                return;
+            if (activeCamera.canvas === e.target) return;
         }
-        const currentCamera = setOfCameras
-            .find((item) => item.canvas === e.target);
+        const currentCamera: Camera | undefined = setOfCameras
+            .find((item: Camera) => item.canvas === e.target);
         if (currentCamera) {
             currentCamera.canvas.style.zIndex = '5';
             currentCamera.toggleFullscreen();
@@ -154,32 +166,40 @@ define(["require", "exports", "hls.js"], function (require, exports, hls_js_1) {
             }
         }
     };
-    function equalize(camera) {
-        function draw() {
+
+    function equalize(camera: Camera) {
+        function draw(): void {
             if (camera.cameraVolume) {
                 const array = new Uint8Array(camera.cameraVolume.analyser.fftSize);
                 camera.cameraVolume.analyser.getByteTimeDomainData(array);
-                let average = 0;
+                let average: number = 0;
                 for (let i = 0; i < array.length; i += 1) {
                     average += Math.abs(array[i] - 128);
                 }
                 average /= array.length;
-                if (vol)
-                    vol.style.width = `${average * 1000 / 200}%`;
+                if (vol) vol.style.width = `${average * 1000 / 200}%`;
             }
             if (camera.fullscreen) {
                 requestAnimationFrame(draw);
             }
         }
+
         draw();
     }
-    const urls = [
+
+    const urls: string[] = [
         'http://live-bumtv.cdnvideo.ru/bumtv-live/smil:bumtv.smil/chunklist_b4192000.m3u8',
         'http://highvolume03.streampartner.nl:1935/vleugels_hd4/livestream/playlist.m3u8',
         'http://193.124.177.175:8081/live-x/t2x2/playlist.m3u8',
         'http://hls-edge.cdn.buy-home.tv/bhtvlive/_definst_/live/playlist.m3u8',
     ];
     for (let i = 0; i < 4; i += 1) {
-        initVideo(document.querySelector(`.video-${i + 1}`), document.querySelector(`.canvas-${i + 1}`), urls[i]);
+        initVideo(
+            document.querySelector(`.video-${i + 1}`),
+            document.querySelector(`.canvas-${i + 1}`),
+            urls[i],
+        );
     }
-});
+};
+
+export {videoLogic}

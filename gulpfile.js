@@ -43,10 +43,10 @@ gulp.task('assets', function () {
 // });
 
 gulp.task('scripts-ts', function () {
-    return gulp.src('src/scripts/*.ts')
+    return gulp.src('src/scripts/**/*.ts')
         .pipe(tsProject())
         .js.pipe(gulp.dest('docs'))
-        // .pipe(uglifyes({ compress:true, mangle: true, ecma: 6 }))
+    // .pipe(uglifyes({ compress:true, mangle: true, ecma: 6 }))
 });
 
 gulp.task('html', function () {
