@@ -1,4 +1,4 @@
-import Flux from "../lib/index";
+import Flux from "../../src/scripts/flux/index";
 
 
 const rootTempl: string = `

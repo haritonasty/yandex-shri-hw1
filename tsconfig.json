@@ -1,5 +1,7 @@
 {
-  "files": ["src/scripts/main-nav.ts"],
+  "files": [
+    "src/scripts/index.ts"
+  ],
   "compilerOptions": {
     /* Basic Options */
     "target": "es6",

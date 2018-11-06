@@ -1,4 +1,4 @@
-import Flux from "../../lib/index";
+import Flux from "../../../src/scripts/flux/index";
 import ContentStructure from "./contentStructure";
 type CallbackFunction = () => void;
 

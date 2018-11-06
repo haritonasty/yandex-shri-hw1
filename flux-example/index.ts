@@ -1,4 +1,4 @@
-import Flux from "./lib/index";
+import Flux from "../src/scripts/flux/index";
 import {rootTempl, RootView} from "./app/root";
 // import {counterCallbacks, CounterView, counterActions, counterTempl} from "./app/counter";
 import {navActions, navCallbacks, navTempl, NavView} from "./app/navigation";
