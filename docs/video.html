@@ -55,7 +55,7 @@
 
         <div class="cameras">
             <button class="help-initializer hidden video-button">Запустить</button>
-            <button class="camera-button video-button camera-button_hidden" onclick="returnFromFullscreen()">Все камеры
+            <button class="camera-button video-button camera-button_hidden">Все камеры
             </button>
             <video class="video video-1 " muted autoplay></video>
             <canvas class="canvas canvas-1"></canvas>
@@ -72,14 +72,12 @@
             <div class="regulator regulator_contrast">
                 <p>Контрастность:</p>
                 <input type="range" title="indicator" min="0" max="200" value="100"
-                       class="regulator__value_current contrast"
-                       oninput="applyFilter('contrast', this.value)">
+                       class="regulator__value_current contrast">
             </div>
             <div class="regulator regulator_brightness">
                 <p>Яркость:</p>
                 <input type="range" title="indicator" min="0" max="200" value="100"
-                       class="regulator__value_current brightness"
-                       oninput="applyFilter('brightness', this.value)">
+                       class="regulator__value_current brightness">
             </div>
             <div>
                 <p>Громкость:</p>
@@ -125,6 +123,8 @@
 
 </script>
 
-<script src="./vendor.js"></script>
+<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<!--<script src="./vendor.js"></script>-->
+<script>document.addEventListener("DOMContentLoaded",function() {require(["main-nav"]);},false);</script>
 </body>
 </html>

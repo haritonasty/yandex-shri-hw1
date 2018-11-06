@@ -1,6 +1,11 @@
-const container = document.querySelector('.events');
+import touchable from 'touchable';
+import { detectIt } from 'detect-it';
 
-let template = `
+export function template() {
+// tslint:disable:max-line-length
+// tslint:disable:no-parameter-reassignment
+  const container: HTMLElement | null = document.querySelector('.events');
+  const template: string = `
     <div class="event {{ type }} {{ size }}">
         <div class="event__close event-control event-control_disabled">
             <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
@@ -26,54 +31,49 @@ let template = `
             <span class="event__description">{{ description }}</span>
             {{data}}
         </div>
-        
+
     </div>
 `;
-
-let eventsStr = '';
-
-if (container) {
+  let eventsStr: string = '';
+  if (container !== null) {
     fetch('./events.json')
-        .then(res => res.json())
-        .then(data => {
-            const events = data.events;
-            for (let i in events) eventsStr += templater(template, events[i]);
-            container.innerHTML += eventsStr;
-        })
-        .then(() => touchableLogic());
-}
+            .then(res => res.json())
+            .then((data) => {
+              const events = data.events;
+              for (const i in events) eventsStr += templater(template, events[i]);
+              container.innerHTML += eventsStr;
+            })
+            .then(() => touchable());
+  }
 
-function templater(html, data) {
-    for (let x in data) {
-        let value = data[x];
-        if (x === 'type') {
-            if (data[x] === 'critical') {
-                value = 'event-critical';
-                html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon event__icon_critical');
-                html = html.replace(new RegExp('event__close', 'ig'), 'event__close event__close_white');
-                html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title event__title_critical');
-            }
-            html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon');
-            html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title');
+  function templater(html: string, data: any) {
+    for (const x in data) {
+      let value = data[x];
+      if (x === 'type') {
+        if (data[x] === 'critical') {
+          value = 'event-critical';
+          html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon event__icon_critical');
+          html = html.replace(new RegExp('event__close', 'ig'), 'event__close event__close_white');
+          html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title event__title_critical');
         }
-        if (x === 'size') {
-            value = data[x] === 'l' ? 'event-big' : data[x] === 'm' ? 'event-middle' : '';
-        }
-
-        if (x === 'description' && data[x]) {
-            html = html.replace(new RegExp('additional-info_disabled', 'ig'), '');
-            html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info');
-        } else {
-            html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info event__info_last');
-        }
-
-        if (x === 'description' && !data['data']) {
-            html = html.replace(new RegExp('{{\\s?' + 'data' + '\\s?}}', 'ig'), '');
-        }
-
-        if (x === 'data') {
-            if (data['icon'] === 'thermal') {
-                value = `
+        html = html.replace(new RegExp('{{ event__icon }}', 'ig'), 'event__icon');
+        html = html.replace(new RegExp('{{ event__title }}', 'ig'), 'event__title');
+      }
+      if (x === 'size') {
+        value = data[x] === 'l' ? 'event-big' : data[x] === 'm' ? 'event-middle' : '';
+      }
+      if (x === 'description' && data[x]) {
+        html = html.replace(new RegExp('additional-info_disabled', 'ig'), '');
+        html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info');
+      } else {
+        html = html.replace(new RegExp('{{ event__info }}', 'ig'), 'event__info event__info_last');
+      }
+      if (x === 'description' && !data['data']) {
+        html = html.replace(new RegExp('{{\\s?' + 'data' + '\\s?}}', 'ig'), '');
+      }
+      if (x === 'data') {
+        if (data['icon'] === 'thermal') {
+          value = `
                     <div class="event__data">
                  <div class="data__climate">
                         <div><span class="climate__type">Температура: </span><span class="climate__value">24 С</span></div>
@@ -81,10 +81,9 @@ function templater(html, data) {
                     </div>
                     </div>
                 `;
-            }
-
-            if (data['icon'] === 'fridge') {
-                value = `
+        }
+        if (data['icon'] === 'fridge') {
+          value = `
                  <div class="event__data">
                  <div class="data__buttons">
                         <button class="data__button">Да</button>
@@ -92,10 +91,9 @@ function templater(html, data) {
                     </div>
                     </div>
                 `;
-            }
-
-            if (data['icon'] === 'music') {
-                value = `
+        }
+        if (data['icon'] === 'music') {
+          value = `
                     <div class="event__data">
                     <div class="data__music">
                         <div class="data__music_composition">
@@ -123,11 +121,10 @@ function templater(html, data) {
                     </div>
                 </div>
                 `;
-            }
-
-            if (data['icon'] === 'cam') {
-                if (detectIt.hasTouch) {
-                    value = `
+        }
+        if (data['icon'] === 'cam') {
+          if (detectIt.hasTouch) {
+            value = `
 <div class="event__data">
                  <div class="data__image data__image_wrapper-touchable">
                         <!--<picture>-->
@@ -148,9 +145,9 @@ function templater(html, data) {
                     </div>
                     </div>
                 `;
-                } else {
-                    value = `
-<div class="event__data">
+          } else {
+            value = `
+           <div class="event__data">
                  <div class="data__image">
                         <!--<picture>-->
                         <!--<sourse media="(max-width:415px)" srcset="cam.jpg">-->
@@ -160,26 +157,21 @@ function templater(html, data) {
                              src="cam.png" alt="Снимок камеры с пылесосом">
                         <!--</picture>-->
                     </div></div>`;
-                }
-            }
-
-            if (data['icon'] === 'stats') {
-                value = `
+          }
+        }
+        if (data['icon'] === 'stats') {
+          value = `
 <div class="event__data">
                  <div class="data__image">
                         <img src="./Richdata.svg" alt="График">
                     </div>
                     </div>
                 `;
-            }
         }
-
-        let re = '{{\\s?' + x + '\\s?}}';
-        html = html.replace(new RegExp(re, 'ig'), value);
-
+      }
+      const re = `{{\\s?${x}\\s?}}`;
+      html = html.replace(new RegExp(re, 'ig'), value);
     }
     return html;
+  }
 }
-
-
-
