@@ -1,10 +1,12 @@
-import Flux from "../../src/scripts/flux/index";
+import Flux from "../flux/index";
 
 
 const rootTempl: string = `
-<div id="nav">Навигация</div>
-<div id="content">Контент</div>
+    <header class="header page__header" id="header"></header>
+    <main class="main main_events" id="content"></main>
+    <footer class="footer page__footer" id="footer"></footer>
 `;
+
 
 class RootView extends Flux.View {
     constructor(node: HTMLElement | null, template: string) {

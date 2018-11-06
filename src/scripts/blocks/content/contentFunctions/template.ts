@@ -1,5 +1,5 @@
-import touchable from 'touchable';
-import { detectIt } from 'detect-it';
+import touchable from './touchable';
+import { detectIt } from './detect-it';
 
 export function template() {
 // tslint:disable:max-line-length

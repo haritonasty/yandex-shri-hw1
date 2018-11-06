@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>УмныйДом: Видеонаблюдение</title>
-    <link rel="stylesheet" href="./style.css">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="noindex">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-</head>
-
-<body>
-<div class="page">
-    <header class="header page__header" id="header"></header>
-
-
-    <main class="main main_video">
-        <div class="main-wrapper main-wrapper_video">
+import ContentStructure from "./contentStructure";
+import {videoLogic} from "./contentFunctions/video";
+const videoTempl: string = `
+ <div class="main-wrapper main-wrapper_video">
             <h1 class="main-title logger">Видеонаблюдение</h1>
         </div>
 
@@ -52,17 +38,14 @@
                 </div>
             </div>
         </div>
-    </main>
+`;
 
-    <footer class="footer page__footer" id="footer"></footer>
-</div>
 
-<script>
+const contentVideo: ContentStructure = {
+    page: 'Видеонаблюдение',
+    template: videoTempl,
+    functions: videoLogic
+};
 
-</script>
 
-<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
-<!--<script src="./vendor.js"></script>-->
-<script>document.addEventListener("DOMContentLoaded",function() {require(["index"]);},false);</script>
-</body>
-</html>
+export {contentVideo};

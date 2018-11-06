@@ -1,4 +1,6 @@
 import Flux from "../flux/index";
+import {template} from "./content/contentFunctions/template";
+
 type CallbackFunction = () => void;
 
 const navTempl: string = `
@@ -16,7 +18,7 @@ const navTempl: string = `
                         <span class="visually-hidden">Закрыть меню</span>
                     </button>
                     <ul class="main-nav__items">
-                        <li class="main-nav__item main-nav__item_active">
+                        <li class="main-nav__item">
                             <a class="main-nav__item-link" href="#" data-event="click=changePage">События</a>
                         </li>
                         <li class="main-nav__item">
@@ -43,20 +45,33 @@ const navActions = new Map()
 
 
 class NavView extends Flux.View {
+    private currPage: string;
+    private currLink: HTMLElement | null;
+
     constructor(node: HTMLElement | null, template: string, actions?: Map<string, CallbackFunction>) {
         super(node, template, actions);
+        this.node.innerHTML = this.template;
+        this.currPage = '';
+        this.currLink = null;
+        this.initActions(this.node);
+        navLogic();
     }
 
     update(state: object): this {
-
-        this.node.innerHTML = this.template;
-        const links: Array<HTMLLinkElement> | null = Array.from(this.node.querySelectorAll('.main-nav__item-link'));
         // @ts-ignore
-        const activeLink = links.find(link => link.innerText === state.activePage);
-        if (activeLink && activeLink.parentElement) {
-            activeLink.parentElement.classList.add('main-nav__item_active');
+        if (this.currPage !== state.activePage) {
+            const links: Array<HTMLLinkElement> | null = Array.from(this.node.querySelectorAll('.main-nav__item-link'));
+            // @ts-ignore
+            const activeLink = links.find(link => link.innerText === state.activePage);
+            if (activeLink && activeLink.parentElement) {
+                if (this.currLink) this.currLink.classList.remove('main-nav__item_active');
+                const activeItem = activeLink.parentElement;
+                activeItem.classList.add('main-nav__item_active');
+                this.currLink = activeItem;
+            }
+            // @ts-ignore
+            this.currPage = state.activePage;
         }
-        this.initActions(this.node);
         return this;
     };
 }
@@ -66,6 +81,28 @@ const navCallbacks = new Map()
         // @ts-ignore
         this.state.activePage = e.target.innerText;
     });
+
+
+const navLogic = () => {
+
+    const menuNavOpen = document.querySelector('.button-burger');
+    const menuNavClose: HTMLButtonElement | null = document.querySelector('.button-close');
+    const menuNav: HTMLElement | null = document.querySelector('.main-nav');
+    const menuNavInner: HTMLDivElement | null = document.querySelector('.main-nav__inner');
+    if (menuNavOpen && menuNavClose) {
+        menuNavOpen.addEventListener('click', toggleMainNav);
+        menuNavClose.addEventListener('click', toggleMainNav);
+    }
+
+    function toggleMainNav(): void {
+        if (menuNavInner && menuNav) {
+            menuNavInner.classList.toggle('main-nav__inner_hidden');
+            menuNav.classList.toggle('main-nav__hidden');
+        }
+    }
+
+};
+
 
 export {navTempl, NavView, navCallbacks, navActions};
 
