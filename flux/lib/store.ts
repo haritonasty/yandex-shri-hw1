@@ -5,8 +5,11 @@ type CallbackFunction = () => void;
 
 interface IStore {
     getState(): object,
+
     subscribe(view: IView): this,
+
     checkAction(action: IAction): void,
+
     setResponses(responses: Map<string, CallbackFunction>): this
 }
 
@@ -16,8 +19,10 @@ class Store implements IStore {
     private responses: Map<string, Function | null>;
 
     constructor(state = {}, observers = []) {
+        const savedState = localStorage.getItem("storeState");
+
         this.observers = observers;
-        this.state = state;
+        this.state = savedState ? JSON.parse(savedState) : state;
         this.responses = new Map();
     }
 
@@ -31,6 +36,7 @@ class Store implements IStore {
     }
 
     private change(): void {
+        console.log(this.state);
         this.observers.forEach(view => view.update(this.state));
     }
 
@@ -39,6 +45,7 @@ class Store implements IStore {
             const cb = this.responses.get(action.type);
             if (cb) {
                 cb(action.data);
+                localStorage.setItem("storeState", JSON.stringify(this.state));
                 this.change();
             }
         }

@@ -29,9 +29,11 @@ abstract class View implements IView {
                 if (event) {
                     const eventData: Array<string> = event.split('=');
                     const eventType = eventData[0];
-                    const eventAction: CallbackFunction | undefined = (this.actions as any).get(eventData[1]);
-                    if (eventAction) {
-                        eventNode.addEventListener(eventType, eventAction);
+                    if (this.actions) {
+                        const eventAction: CallbackFunction | undefined = this.actions.get(eventData[1]);
+                        if (eventAction) {
+                            eventNode.addEventListener(eventType, eventAction);
+                        }
                     }
                 }
             })
