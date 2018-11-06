@@ -7,6 +7,10 @@ npm i
 npm run dev
 ```
 
+### HW-Flux
+
+Описание обновлю чуть позже
+
 
 ### HW-Typescript
 
