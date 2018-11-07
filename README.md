@@ -11,9 +11,9 @@ npm run dev
 #### Описание библиотеки
 
 Flux состоит из трех частей:
+- Dispatcher
 - Store
 - View
-- Dispatcher
 
 ##### 1. Dispatcher API
 
@@ -83,6 +83,8 @@ constructor(node: HTMLElement | null, template: string, actions?: Map<string, Ca
  - Данные `store` сохраняются в `localStorage`
  - Приложение поделено на блоки: `navigation`, `footer`, `content`.
  - Блок `content` и `navigation` перерисовываются только тогда, когда активная страница изменяется. `footer` не перерисовывается.
+ - `actions-ы` логируются в консоли.
+ - [Посмотреть Демо](https://haritonasty.github.io/yandex-shri-smarthome/docs/)
  
 ---
 ### HW-Typescript
