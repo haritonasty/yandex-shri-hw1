@@ -5,7 +5,7 @@ import {ContentView, pagesContent} from "./blocks/content/content";
 import {rootTempl, RootView} from "./blocks/root";
 
 
-const store = new Flux.Store({activePage: 'Сводка'});
+const store = new Flux.Store({activePage: 'События'});
 const initState: object = store.getState();
 
 const viewRoot = new RootView(document.getElementById('root'), rootTempl).update();

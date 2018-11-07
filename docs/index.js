@@ -5,7 +5,7 @@ define(["require", "exports", "./flux/index", "./blocks/navigation", "./blocks/f
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     index_1 = __importDefault(index_1);
-    const store = new index_1.default.Store({ activePage: 'Сводка' });
+    const store = new index_1.default.Store({ activePage: 'События' });
     const initState = store.getState();
     const viewRoot = new root_1.RootView(document.getElementById('root'), root_1.rootTempl).update();
     const viewNav = new navigation_1.NavView(document.getElementById('header'), navigation_1.navTempl, navigation_1.navActions).update(initState);
