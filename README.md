@@ -1,4 +1,4 @@
-### [Адаптивная верстка страницы событий УмногоДома 🤖](https://haritonasty.github.io/yandex-shri-smarthome/)
+### [Смотреть демо🤖](https://haritonasty.github.io/yandex-shri-smarthome/docs/)
 
 Проект запускаю на node 8.11.4
 
