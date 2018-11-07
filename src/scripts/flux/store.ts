@@ -18,10 +18,9 @@ class Store implements IStore {
     private state: object;
     private responses: Map<string, Function | null>;
 
-    constructor(state = {}, observers = []) {
+    constructor(state = {}) {
         const savedState = localStorage.getItem("storeState");
-
-        this.observers = observers;
+        this.observers = [];
         this.state = savedState ? JSON.parse(savedState) : state;
         this.responses = new Map();
     }

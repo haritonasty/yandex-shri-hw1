@@ -40,27 +40,6 @@ abstract class View implements IView {
         }
     }
 
-    protected templater(template: string, data: any): string {
-        const matches: Array<string> | null = template.match(/{{.+?}}/g);
-        let html = template;
-        if (matches) {
-            matches.forEach((str: string) => {
-                str = str.replace('{{', '').replace('}}', '');
-                if (data[str] !== undefined) {
-                    html = html.replace('{{' + str + '}}', data[str]);
-                }
-            });
-        }
-        return html;
-    }
-
-
-    // update(): void {
-    //     this.node.innerHTML = this.templater(this.template, this.getData());
-    //     this.initActions(this.node);
-    // }
-
-
 }
 
 export {IView, View};
