@@ -47,7 +47,7 @@ store.subscribe(viewNav).setResponses(navCallbacks);
 
 Получить `state` из `store` можно с помощью: 
 ```javascript
-store.getState();
+store.getState(); // возвращает мутабельный state!!!
 ```
 ##### 3. View API
 
